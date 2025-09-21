@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardín Nocturno de Flores - Para Ti ❤️</title>
+    <meta name="description" content="Un hermoso jardín nocturno con flores animadas y música relajante">
+    <meta name="keywords" content="flores, jardín, nocturno, animación, música, amor">
+    <style>
+        *,
+        *::after,
+        *::before {
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+        }
+
+        :root {
+          --dark-color: #000;
+        }
+
+        body {
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          min-height: 100vh;
+          background-color: var(--dark-color);
+          overflow: hidden;
+          perspective: 1000px;
+        }
+
+        /* Cielo nocturno con luna y estrellas */
+        .night {
+          position: fixed;
+          left: 50%;
+          top: 0;
+          transform: translateX(-50%);
+          width: 100%;
+          height: 100%;
+          filter: blur(0.1vmin);
+          background-image: 
+            radial-gradient(ellipse at top, transparent 0%, var(--dark-color)), 
+            radial-gradient(ellipse at bottom, var(--dark-color), rgba(145, 233, 255, 0.1)), 
+            repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), 
+            repeating-linear-gradient(189deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), 
+            repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), 
+            linear-gradient(90deg, rgb(21, 50, 100), rgb(10, 20, 50));
+        }
+
+        /* Luna */
+        .moon {
+          position: absolute;
+          top: 8%;
+          right: 12%;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 35% 25%, #ffffff 0%, #f5f5f5 30%, #e8e8e8 70%, #d0d0d0 100%);
+          box-shadow: 
+            0 0 40px rgba(255, 255, 255, 0.6),
+            0 0 80px rgba(255, 255, 255, 0.3),
+            0 0 120px rgba(255, 255, 255, 0.1);
+          animation: moonGlow 4s ease-in-out infinite alternate;
+          z-index: 5;
+        }
+
+        .moon::before {
+          content: '';
+          position: absolute;
+          top: 20%;
+          left: 15%;
+          width: 12px;
+          height: 12px;
+          background: rgba(200, 200, 200, 0.4);
+          border-radius: 50%;
+        }
+
+        .moon::after {
+          content: '';
+          position: absolute;
+          top: 60%;
+          right: 25%;
+          width: 8px;
+          height: 8px;
+          background: rgba(180, 180, 180, 0.3);
+          border-radius: 50%;
+        }
+
+        @keyframes moonGlow {
+          0% { 
+            box-shadow: 
+              0 0 40px rgba(255, 255, 255, 0.6),
+              0 0 80px rgba(255, 255, 255, 0.3),
+              0 0 120px rgba(255, 255, 255, 0.1);
+          }
+          100% { 
+            box-shadow: 
+              0 0 60px rgba(255, 255, 255, 0.8),
+              0 0 100px rgba(255, 255, 255, 0.4),
+              0 0 140px rgba(255, 255, 255, 0.15);
+          }
+        }
+
+        /* Estrellas */
+        .stars {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 4;
+        }
+
+        .star {
+          position: absolute;
+          background: white;
+          border-radius: 50%;
+          animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .star::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 1px;
+          height: 6px;
+          background: rgba(255, 255, 255, 0.6);
+        }
+
+        .star::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(90deg);
+          width: 1px;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.6);
+        }
+
+        .star:nth-child(1) { top: 12%; left: 8%; width: 2px; height: 2px; animation-delay: 0s; }
+        .star:nth-child(2) { top: 18%; left: 25%; width: 1.5px; height: 1.5px; animation-delay: 1s; }
+        .star:nth-child(3) { top: 8%; left: 45%; width: 2px; height: 2px; animation-delay: 2s; }
+        .star:nth-child(4) { top: 22%; left: 65%; width: 1px; height: 1px; animation-delay: 0.5s; }
+        .star:nth-child(5) { top: 15%; left: 85%; width: 1.5px; height: 1.5px; animation-delay: 1.5s; }
+
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 1; }
+        }
+
+        .flowers {
+          position: relative;
+          transform: scale(0.9);
+        }
+
+        .flower {
+          position: absolute;
+          bottom: 10vmin;
+          transform-origin: bottom center;
+          z-index: 10;
+          --fl-speed: 0.8s;
+        }
+
+        /* Mensajes personalizados secuenciales */
+        .message {
+          background: linear-gradient(135deg, rgba(252, 231, 0, 0.3), rgba(255, 235, 59, 0.2));
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 235, 59, 0.2);
+          top: 15%;
+          left: 50%;
+          font-family: "Georgia", serif;
+          font-size: 32px;
+          font-style: normal;
+          font-weight: 600;
+          height: auto;
+          line-height: 1.2;
+          padding: 20px 30px;
+          position: absolute;
+          opacity: 0;
+          border-radius: 20px;
+          box-shadow: 
+            0 4px 20px rgba(255, 235, 59, 0.1),
+            0 0 30px rgba(255, 235, 59, 0.05);
+          color: rgba(255, 245, 157, 0.95);
+          text-align: center;
+          transform: translateX(-50%);
+          letter-spacing: 1px;
+          text-shadow: 
+            0 0 10px rgba(255, 245, 157, 0.3),
+            0 0 20px rgba(255, 245, 157, 0.2);
+        }
+
+        .message-1 {
+          animation: fadeInOut 4s forwards;
+          animation-delay: 8s;
+        }
+
+        .message-2 {
+          animation: fadeIn 2s forwards;
+          animation-delay: 13s;
+        }
+
+        @keyframes fadeInOut {
+          0% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px) scale(0.9);
+          }
+          20% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1);
+          }
+          80% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px) scale(0.9);
+          }
+        }
+
+        @keyframes fadeIn {
+          0% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px) scale(0.9);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1);
+          }
+        }
+
+        /* Flores amarillas originales */
+        .flower--1 {
+          animation: moving-flower-1 4s linear infinite;
+        }
+        .flower--1 .flower__line {
+          height: 70vmin;
+          animation-delay: 0.3s;
+        }
+        .flower--1 .flower__line__leaf--1 {
+          animation: blooming-leaf-right var(--fl-speed) 1.6s backwards;
+        }
+        .flower--1 .flower__line__leaf--2 {
+          animation: blooming-leaf-right var(--fl-speed) 1.4s backwards;
+        }
+        .flower--1 .flower__line__leaf--3 {
+          animation: blooming-leaf-left var(--fl-speed) 1.2s backwards;
+        }
+        .flower--1 .flower__line__leaf--4 {
+          animation: blooming-leaf-left var(--fl-speed) 1s backwards;
+        }
+        .flower--1 .flower__line__leaf--5 {
+          animation: blooming-leaf-right var(--fl-speed) 1.8s backwards;
+        }
+        .flower--1 .flower__line__leaf--6 {
+          animation: blooming-leaf-left var(--fl-speed) 2s backwards;
+        }
+
+        .flower--2 {
+          left: 50%;
+          transform: rotate(20deg);
+          animation: moving-flower-2 4s linear infinite;
+        }
+        .flower--2 .flower__line {
+          height: 60vmin;
+          animation-delay: 0.6s;
+        }
+        .flower--2 .flower__line__leaf--1 {
+          animation: blooming-leaf-right var(--fl-speed) 1.9s backwards;
+        }
+        .flower--2 .flower__line__leaf--2 {
+          animation: blooming-leaf-right var(--fl-speed) 1.7s backwards;
+        }
+        .flower--2 .flower__line__leaf--3 {
+          animation: blooming-leaf-left var(--fl-speed) 1.5s backwards;
+        }
+        .flower--2 .flower__line__leaf--4 {
+          animation: blooming-leaf-left var(--fl-speed) 1.3s backwards;
+        }
+
+        .flower--3 {
+          left: 50%;
+          transform: rotate(-15deg);
+          animation: moving-flower-3 4s linear infinite;
+        }
+        .flower--3 .flower__line {
+          animation-delay: 0.9s;
+        }
+        .flower--3 .flower__line__leaf--1 {
+          animation: blooming-leaf-right var(--fl-speed) 2.5s backwards;
+        }
+        .flower--3 .flower__line__leaf--2 {
+          animation: blooming-leaf-right var(--fl-speed) 2.3s backwards;
+        }
+        .flower--3 .flower__line__leaf--3 {
+          animation: blooming-leaf-left var(--fl-speed) 2.1s backwards;
+        }
+        .flower--3 .flower__line__leaf--4 {
+          animation: blooming-leaf-left var(--fl-speed) 1.9s backwards;
+        }
+
+        /* Nuevas rosas rojas */
+        .rose {
+          position: absolute;
+          bottom: 8vmin;
+          transform-origin: bottom center;
+          z-index: 10;
+        }
+
+        .rose--1 {
+          left: -15%;
+          animation: moving-rose-1 5s linear infinite;
+        }
+
+        .rose--2 {
+          right: -15%;
+          animation: moving-rose-2 4.5s linear infinite;
+        }
+
+        .rose__petals {
+          position: relative;
+          width: 12vmin;
+          height: 12vmin;
+          animation: blooming-rose 2.5s 3s backwards;
+        }
+
+        .rose__petal {
+          position: absolute;
+          width: 8vmin;
+          height: 10vmin;
+          background: linear-gradient(180deg, #ff1744 0%, #d50000 100%);
+          border-radius: 50% 80% 50% 20%;
+          transform-origin: bottom center;
+        }
+
+        .rose__petal:nth-child(1) {
+          transform: rotate(0deg) translateY(-2vmin);
+          z-index: 1;
+        }
+        .rose__petal:nth-child(2) {
+          transform: rotate(60deg) translateY(-1vmin);
+          z-index: 2;
+        }
+        .rose__petal:nth-child(3) {
+          transform: rotate(120deg) translateY(-1.5vmin);
+          z-index: 3;
+        }
+        .rose__petal:nth-child(4) {
+          transform: rotate(180deg) translateY(-2vmin);
+          z-index: 4;
+        }
+        .rose__petal:nth-child(5) {
+          transform: rotate(240deg) translateY(-1vmin);
+          z-index: 5;
+        }
+        .rose__petal:nth-child(6) {
+          transform: rotate(300deg) translateY(-1.5vmin);
+          z-index: 6;
+        }
+
+        .rose__stem {
+          height: 45vmin;
+          width: 2vmin;
+          background: linear-gradient(to top, #2e7d32, #4caf50);
+          animation: grow-rose-stem 3s 1.5s backwards;
+        }
+
+        /* Nuevas margaritas blancas */
+        .daisy {
+          position: absolute;
+          bottom: 6vmin;
+          transform-origin: bottom center;
+          z-index: 10;
+        }
+
+        .daisy--1 {
+          left: 25%;
+          animation: moving-daisy-1 6s linear infinite;
+        }
+
+        .daisy--2 {
+          right: 25%;
+          animation: moving-daisy-2 5.5s linear infinite;
+        }
+
+        .daisy__petals {
+          position: relative;
+          width: 10vmin;
+          height: 10vmin;
+          animation: blooming-daisy 2s 4s backwards;
+        }
+
+        .daisy__petal {
+          position: absolute;
+          width: 3vmin;
+          height: 8vmin;
+          background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+          border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+          transform-origin: bottom center;
+          top: 50%;
+          left: 50%;
+        }
+
+        .daisy__petal:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-4vmin); }
+        .daisy__petal:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg) translateY(-4vmin); }
+        .daisy__petal:nth-child(3) { transform: translate(-50%, -50%) rotate(90deg) translateY(-4vmin); }
+        .daisy__petal:nth-child(4) { transform: translate(-50%, -50%) rotate(135deg) translateY(-4vmin); }
+        .daisy__petal:nth-child(5) { transform: translate(-50%, -50%) rotate(180deg) translateY(-4vmin); }
+        .daisy__petal:nth-child(6) { transform: translate(-50%, -50%) rotate(225deg) translateY(-4vmin); }
+        .daisy__petal:nth-child(7) { transform: translate(-50%, -50%) rotate(270deg) translateY(-4vmin); }
+        .daisy__petal:nth-child(8) { transform: translate(-50%, -50%) rotate(315deg) translateY(-4vmin); }
+
+        .daisy__center {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 3vmin;
+          height: 3vmin;
+          background: radial-gradient(circle, #ffeb3b, #ffc107);
+          border-radius: 50%;
+          z-index: 10;
+        }
+
+        .daisy__stem {
+          height: 35vmin;
+          width: 1.5vmin;
+          background: linear-gradient(to top, #388e3c, #4caf50);
+          animation: grow-daisy-stem 2.5s 2s backwards;
+        }
+
+        /* Continuación de estilos originales */
+        .flower__leafs {
+          position: relative;
+          animation: blooming-flower 2s backwards;
+        }
+        .flower__leafs--1 {
+          animation-delay: 1.1s;
+        }
+        .flower__leafs--2 {
+          animation-delay: 1.4s;
+        }
+        .flower__leafs--3 {
+          animation-delay: 1.7s;
+        }
+        .flower__leafs::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          transform: translate(-50%, -100%);
+          width: 8vmin;
+          height: 8vmin;
+          background-color: #1aaa15;
+          filter: blur(10vmin);
+        }
+        .flower__leaf {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 8vmin;
+          height: 11vmin;
+          border-radius: 51% 49% 47% 53%/44% 45% 55% 69%;
+          background-color: #1aaa15;
+          background-image: linear-gradient(to top, #fce700, #fce700);
+          transform-origin: bottom center;
+          opacity: 0.9;
+          box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.5);
+        }
+        .flower__leaf--1 {
+          transform: translate(-10%, 1%) rotateY(40deg) rotateX(-50deg);
+        }
+        .flower__leaf--2 {
+          transform: translate(-50%, -4%) rotateX(40deg);
+        }
+        .flower__leaf--3 {
+          transform: translate(-90%, 0%) rotateY(45deg) rotateX(50deg);
+        }
+        .flower__leaf--4 {
+          width: 8vmin;
+          height: 8vmin;
+          transform-origin: bottom left;
+          border-radius: 4vmin 10vmin 4vmin 4vmin;
+          transform: translate(0%, 18%) rotateX(70deg) rotate(-43deg);
+          background-image: linear-gradient(to top, #fce700, #fce700);
+          z-index: 1;
+          opacity: 0.8;
+        }
+        .flower__white-circle {
+          position: absolute;
+          left: -3.5vmin;
+          top: -3vmin;
+          width: 9vmin;
+          height: 4vmin;
+          border-radius: 50%;
+          background-color: #ffffff;
+        }
+        .flower__white-circle::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 45%;
+          transform: translate(-50%, -50%);
+          width: 60%;
+          height: 60%;
+          border-radius: inherit;
+          background-image: repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0px, 
+          rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 12px), repeating-linear-gradient(45deg, 
+          rgba(0, 0, 0, 0.03) 0px, rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 12px), 
+          linear-gradient(90deg, rgb(190, 133, 0), rgb(190, 133, 0));
+        }
+        .flower__line {
+          height: 55vmin;
+          width: 1.5vmin;
+          background-image: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent, 
+          rgba(255, 255, 255, 0.2)), linear-gradient(to top, transparent 10%, #064600, #064600);
+          box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+          animation: grow-flower-tree 4s backwards;
+        }
+        .flower__line__leaf {
+          --w: 7vmin;
+          --h: calc(var(--w) + 2vmin);
+          position: absolute;
+          top: 20%;
+          left: 90%;
+          width: var(--w);
+          height: var(--h);
+          border-top-right-radius: var(--h);
+          border-bottom-left-radius: var(--h);
+          background-image: linear-gradient(to top, rgba(20, 122, 20, 0.4), #1aaa15);
+        }
+        .flower__line__leaf--1 {
+          transform: rotate(70deg) rotateY(30deg);
+        }
+        .flower__line__leaf--2 {
+          top: 45%;
+          transform: rotate(70deg) rotateY(30deg);
+        }
+        .flower__line__leaf--3, .flower__line__leaf--4, .flower__line__leaf--6 {
+          border-top-right-radius: 0;
+          border-bottom-left-radius: 0;
+          border-top-left-radius: var(--h);
+          border-bottom-right-radius: var(--h);
+          left: -460%;
+          top: 12%;
+          transform: rotate(-70deg) rotateY(30deg);
+        }
+        .flower__line__leaf--4 {
+          top: 40%;
+        }
+        .flower__line__leaf--5 {
+          top: 0;
+          transform-origin: left;
+          transform: rotate(70deg) rotateY(30deg) scale(0.6);
+        }
+        .flower__line__leaf--6 {
+          top: -2%;
+          left: -450%;
+          transform-origin: right;
+          transform: rotate(-70deg) rotateY(30deg) scale(0.6);
+        }
+
+        /* Resto del CSS original para hierba y efectos */
+        .flower__light {
+          position: absolute;
+          bottom: 0vmin;
+          width: 1vmin;
+          height: 1vmin;
+          background-color: rgb(255, 251, 0);
+          border-radius: 50%;
+          filter: blur(0.2vmin);
+          animation: light-ans 4s linear infinite backwards;
+        }
+        .flower__light:nth-child(odd) {
+          background-color: #fce700;
+        }
+        .flower__light--1 {
+          left: -2vmin;
+          animation-delay: 1s;
+        }
+        .flower__light--2 {
+          left: 3vmin;
+          animation-delay: 0.5s;
+        }
+        .flower__light--3 {
+          left: -6vmin;
+          animation-delay: 0.3s;
+        }
+        .flower__light--4 {
+          left: 6vmin;
+          animation-delay: 0.9s;
+        }
+        .flower__light--5 {
+          left: -1vmin;
+          animation-delay: 1.5s;
+        }
+        .flower__light--6 {
+          left: -4vmin;
+          animation-delay: 3s;
+        }
+        .flower__light--7 {
+          left: 3vmin;
+          animation-delay: 2s;
+        }
+        .flower__light--8 {
+          left: -6vmin;
+          animation-delay: 3.5s;
+        }
+
+        /* Hierba completa del código original */
+        .flower__grass {
+          --c: #00b815;
+          --line-w: 1.5vmin;
+          position: absolute;
+          bottom: 12vmin;
+          left: -7vmin;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          z-index: 20;
+          transform-origin: bottom center;
+          transform: rotate(-48deg) rotateY(40deg);
+        }
+        .flower__grass--1 {
+          animation: moving-grass 2s linear infinite;
+        }
+        .flower__grass--2 {
+          left: 2vmin;
+          bottom: 10vmin;
+          transform: scale(0.5) rotate(75deg) rotateX(10deg) rotateY(-200deg);
+          opacity: 0.8;
+          z-index: 0;
+          animation: moving-grass--2 1.5s linear infinite;
+        }
+        .flower__grass--top {
+          width: 7vmin;
+          height: 10vmin;
+          border-top-right-radius: 100%;
+          border-right: var(--line-w) solid var(--c);
+          transform-origin: bottom center;
+          transform: rotate(-2deg);
+        }
+        .flower__grass--bottom {
+          margin-top: -2px;
+          width: var(--line-w);
+          height: 25vmin;
+          background-image: linear-gradient(to top, transparent, var(--c));
+        }
+        .flower__grass__leaf {
+          --size: 10vmin;
+          position: absolute;
+          width: calc(var(--size) * 2.1);
+          height: var(--size);
+          border-top-left-radius: var(--size);
+          border-top-right-radius: var(--size);
+          background-image: linear-gradient(to top, transparent, transparent 30%, var(--c));
+          z-index: 100;
+        }
+        .flower__grass__leaf--1 {
+          top: -6%;
+          left: 30%;
+          --size: 6vmin;
+          transform: rotate(-20deg);
+          animation: growing-grass-ans--1 2s 2.6s backwards;
+        }
+        @keyframes growing-grass-ans--1 {
+          0% {
+            transform-origin: bottom left;
+            transform: rotate(-20deg) scale(0);
+          }
+        }
+        .flower__grass__leaf--2 {
+          top: -5%;
+          left: -110%;
+          --size: 6vmin;
+          transform: rotate(10deg);
+          animation: growing-grass-ans--2 2s 2.4s linear backwards;
+        }
+        @keyframes growing-grass-ans--2 {
+          0% {
+            transform-origin: bottom right;
+            transform: rotate(10deg) scale(0);
+          }
+        }
+        .flower__grass__leaf--3 {
+          top: 5%;
+          left: 60%;
+          --size: 8vmin;
+          transform: rotate(-18deg) rotateX(-20deg);
+          animation: growing-grass-ans--3 2s 2.2s linear backwards;
+        }
+        @keyframes growing-grass-ans--3 {
+          0% {
+            transform-origin: bottom left;
+            transform: rotate(-18deg) rotateX(-20deg) scale(0);
+          }
+        }
+        .flower__grass__leaf--4 {
+          top: 6%;
+          left: -135%;
+          --size: 8vmin;
+          transform: rotate(2deg);
+          animation: growing-grass-ans--4 2s 2s linear backwards;
+        }
+        @keyframes growing-grass-ans--4 {
+          0% {
+            transform-origin: bottom right;
+            transform: rotate(2deg) scale(0);
+          }
+        }
+        .flower__grass__leaf--5 {
+          top: 20%;
+          left: 60%;
+          --size: 10vmin;
+          transform: rotate(-24deg) rotateX(-20deg);
+          animation: growing-grass-ans--5 2s 1.8s linear backwards;
+        }
+        @keyframes growing-grass-ans--5 {
+          0% {
+            transform-origin: bottom left;
+            transform: rotate(-24deg) rotateX(-20deg) scale(0);
+          }
+        }
+        .flower__grass__leaf--6 {
+          top: 22%;
+          left: -180%;
+          --size: 10vmin;
+          transform: rotate(10deg);
+          animation: growing-grass-ans--6 2s 1.6s linear backwards;
+        }
+        @keyframes growing-grass-ans--6 {
+          0% {
+            transform-origin: bottom right;
+            transform: rotate(10deg) scale(0);
+          }
+        }
+        .flower__grass__leaf--7 {
+          top: 39%;
+          left: 70%;
+          --size: 10vmin;
+          transform: rotate(-10deg);
+          animation: growing-grass-ans--7 2s 1.4s linear backwards;
+        }
+        @keyframes growing-grass-ans--7 {
+          0% {
+            transform-origin: bottom left;
+            transform: rotate(-10deg) scale(0);
+          }
+        }
+        .flower__grass__leaf--8 {
+          top: 40%;
+          left: -215%;
+          --size: 11vmin;
+          transform: rotate(10deg);
+          animation: growing-grass-ans--8 2s 1.2s linear backwards;
+        }
+        @keyframes growing-grass-ans--8 {
+          0% {
+            transform-origin: bottom right;
+            transform: rotate(10deg) scale(0);
+          }
+        }
+        .flower__grass__overlay {
+          position: absolute;
+          top: -10%;
+          right: 0%;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.6);
+          filter: blur(1.5vmin);
+          z-index: 100;
+        }
+
+        /* Hierba larga adicional */
+        .flower__g-long {
+          --w: 2vmin;
+          --h: 6vmin;
+          --c: #1aaa15;
+          position: absolute;
+          bottom: 10vmin;
+          left: -3vmin;
+          transform-origin: bottom center;
+          transform: rotate(-30deg) rotateY(-20deg);
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          animation: flower-g-long-ans 3s linear infinite;
+        }
+        @keyframes flower-g-long-ans {
+          0%, 100% {
+            transform: rotate(-30deg) rotateY(-20deg);
+          }
+          50% {
+            transform: rotate(-32deg) rotateY(-20deg);
+          }
+        }
+        .flower__g-long__top {
+          top: calc(var(--h) * -1);
+          width: calc(var(--w) + 1vmin);
+          height: var(--h);
+          border-top-right-radius: 100%;
+          border-right: 0.7vmin solid var(--c);
+          transform: translate(-0.7vmin, 1vmin);
+        }
+        .flower__g-long__bottom {
+          width: var(--w);
+          height: 50vmin;
+          transform-origin: bottom center;
+          background-image: linear-gradient(to top, transparent 30%, var(--c));
+          box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+          clip-path: polygon(35% 0, 65% 1%, 100% 100%, 0% 100%);
+        }
+
+        /* Hierba adicional a los lados */
+        .long-g {
+          position: absolute;
+          bottom: 25vmin;
+          left: -42vmin;
+          transform-origin: bottom left;
+        }
+        .long-g--1 {
+          bottom: 0vmin;
+          transform: scale(0.8) rotate(-5deg);
+        }
+        .long-g--2, .long-g--3 {
+          bottom: -3vmin;
+          left: -35vmin;
+          transform-origin: center;
+          transform: scale(0.6) rotateX(60deg);
+        }
+        .long-g--3 {
+          left: -17vmin;
+          bottom: 0vmin;
+        }
+        .long-g--4 {
+          left: 25vmin;
+          bottom: -3vmin;
+          transform-origin: center;
+          transform: scale(0.6) rotateX(60deg);
+        }
+        .long-g--5 {
+          left: 42vmin;
+          bottom: 0vmin;
+          transform: scale(0.8) rotate(2deg);
+        }
+        .long-g--6 {
+          left: 0vmin;
+          bottom: -20vmin;
+          z-index: 100;
+          filter: blur(0.3vmin);
+          transform: scale(0.8) rotate(2deg);
+        }
+        .long-g--7 {
+          left: 35vmin;
+          bottom: 20vmin;
+          z-index: -1;
+          filter: blur(0.3vmin);
+          transform: scale(0.6) rotate(2deg);
+          opacity: 0.7;
+        }
+        .long-g .leaf {
+          --w: 15vmin;
+          --h: 40vmin;
+          --c: #1aaa15;
+          position: absolute;
+          bottom: 0;
+          width: var(--w);
+          height: var(--h);
+          border-top-left-radius: 100%;
+          border-left: 2vmin solid var(--c);
+          mask-image: linear-gradient(to top, transparent 20%, var(--dark-color));
+          transform-origin: bottom center;
+        }
+        .long-g .leaf--0 {
+          left: 2vmin;
+          animation: leaf-ans-1 4s linear infinite;
+        }
+        .long-g .leaf--1 {
+          --w: 5vmin;
+          --h: 60vmin;
+          animation: leaf-ans-1 4s linear infinite;
+        }
+        .long-g .leaf--2 {
+          --w: 10vmin;
+          --h: 40vmin;
+          left: -0.5vmin;
+          bottom: 5vmin;
+          transform-origin: bottom left;
+          transform: rotateY(-180deg);
+          animation: leaf-ans-2 3s linear infinite;
+        }
+        .long-g .leaf--3 {
+          --w: 5vmin;
+          --h: 30vmin;
+          left: -1vmin;
+          bottom: 3.2vmin;
+          transform-origin: bottom left;
+          transform: rotate(-10deg) rotateY(-180deg);
+          animation: leaf-ans-3 3s linear infinite;
+        }
+
+        @keyframes leaf-ans-1 {
+          0%, 100% {
+            transform: rotate(-5deg) scale(1);
+          }
+          50% {
+            transform: rotate(5deg) scale(1.1);
+          }
+        }
+        @keyframes leaf-ans-2 {
+          0%, 100% {
+            transform: rotateY(-180deg) rotate(5deg);
+          }
+          50% {
+            transform: rotateY(-180deg) rotate(0deg) scale(1.1);
+          }
+        }
+        @keyframes leaf-ans-3 {
+          0%, 100% {
+            transform: rotate(-10deg) rotateY(-180deg);
+          }
+          50% {
+            transform: rotate(-20deg) rotateY(-180deg);
+          }
+        }
+
+        .growing-grass {
+          animation: growing-grass-ans 1s 2s backwards;
+        }
+
+        .grow-ans {
+          animation: grow-ans 2s var(--d) backwards;
+        }
+
+        /* Animaciones */
+        @keyframes grow-rose-stem {
+          0% { height: 0; }
+        }
+
+        @keyframes grow-daisy-stem {
+          0% { height: 0; }
+        }
+
+        @keyframes blooming-rose {
+          0% { 
+            transform: scale(0) rotate(0deg); 
+            opacity: 0;
+          }
+          100% { 
+            transform: scale(1) rotate(360deg); 
+            opacity: 1;
+          }
+        }
+
+        @keyframes blooming-daisy {
+          0% { 
+            transform: scale(0); 
+            opacity: 0;
+          }
+          100% { 
+            transform: scale(1); 
+            opacity: 1;
+          }
+        }
+
+        @keyframes moving-rose-1 {
+          0%, 100% { transform: rotate(-2deg); }
+          50% { transform: rotate(2deg); }
+        }
+
+        @keyframes moving-rose-2 {
+          0%, 100% { transform: rotate(2deg); }
+          50% { transform: rotate(-2deg); }
+        }
+
+        @keyframes moving-daisy-1 {
+          0%, 100% { transform: rotate(-1deg); }
+          50% { transform: rotate(1deg); }
+        }
+
+        @keyframes moving-daisy-2 {
+          0%, 100% { transform: rotate(1deg); }
+          50% { transform: rotate(-1deg); }
+        }
+
+        @keyframes light-ans {
+          0% {
+            opacity: 0;
+            transform: translateY(0vmin);
+          }
+          25% {
+            opacity: 1;
+            transform: translateY(-5vmin) translateX(-2vmin);
+          }
+          50% {
+            opacity: 1;
+            transform: translateY(-15vmin) translateX(2vmin);
+            filter: blur(0.2vmin);
+          }
+          75% {
+            transform: translateY(-20vmin) translateX(-2vmin);
+            filter: blur(0.2vmin);
+          }
+          100% {
+            transform: translateY(-30vmin);
+            opacity: 0;
+            filter: blur(1vmin);
+          }
+        }
+
+        @keyframes moving-flower-1 {
+          0%, 100% { transform: rotate(2deg); }
+          50% { transform: rotate(-2deg); }
+        }
+
+        @keyframes moving-flower-2 {
+          0%, 100% { transform: rotate(18deg); }
+          50% { transform: rotate(14deg); }
+        }
+
+        @keyframes moving-flower-3 {
+          0%, 100% { transform: rotate(-18deg); }
+          50% { transform: rotate(-20deg) rotateY(-10deg); }
+        }
+
+        @keyframes blooming-leaf-right {
+          0% {
+            transform-origin: left;
+            transform: rotate(70deg) rotateY(30deg) scale(0);
+          }
+        }
+
+        @keyframes blooming-leaf-left {
+          0% {
+            transform-origin: right;
+            transform: rotate(-70deg) rotateY(30deg) scale(0);
+          }
+        }
+
+        @keyframes grow-flower-tree {
+          0% {
+            height: 0;
+            border-radius: 1vmin;
+          }
+        }
+
+        @keyframes blooming-flower {
+          0% { transform: scale(0); }
+        }
+
+        @keyframes moving-grass {
+          0%, 100% { transform: rotate(-48deg) rotateY(40deg); }
+          50% { transform: rotate(-50deg) rotateY(40deg); }
+        }
+
+        @keyframes moving-grass--2 {
+          0%, 100% {
+            transform: scale(0.5) rotate(75deg) rotateX(10deg) rotateY(-200deg);
+          }
+          50% {
+            transform: scale(0.5) rotate(79deg) rotateX(10deg) rotateY(-200deg);
+          }
+        }
+
+        @keyframes growing-grass-ans {
+          0% { transform: scale(0); }
+        }
+
+        @keyframes grow-ans {
+          0% {
+            transform: scale(0);
+            opacity: 0;
+          }
+        }
+
+        /* Control de animaciones */
+        .container * {
+          animation-play-state: paused !important;
+        }
+
+        /* Sistema de audio y controles */
+        .audio-controls {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          z-index: 1000;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+
+        .audio-btn {
+          background: rgba(255, 255, 255, 0.1);
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+          color: white;
+          font-size: 20px;
+        }
+
+        .audio-btn:hover {
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.5);
+          transform: scale(1.1);
+        }
+
+        .audio-btn.playing {
+          background: rgba(255, 235, 59, 0.3);
+          border-color: rgba(255, 235, 59, 0.6);
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+
+        /* Partículas flotantes mejoradas */
+        .particles {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .particle {
+          position: absolute;
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+          border-radius: 50%;
+          animation: float 8s infinite linear;
+        }
+
+        .particle:nth-child(odd) {
+          background: radial-gradient(circle, rgba(255, 235, 59, 0.6) 0%, transparent 70%);
+        }
+
+        @keyframes float {
+          0% {
+            transform: translateY(100vh) translateX(0) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100px) translateX(100px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
+        /* Efectos de luz mejorados */
+        .light-rays {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        .light-ray {
+          position: absolute;
+          width: 2px;
+          height: 100vh;
+          background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+          animation: lightSweep 6s infinite linear;
+        }
+
+        .light-ray:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .light-ray:nth-child(2) { left: 40%; animation-delay: 2s; }
+        .light-ray:nth-child(3) { left: 60%; animation-delay: 4s; }
+        .light-ray:nth-child(4) { left: 80%; animation-delay: 1s; }
+
+        @keyframes lightSweep {
+          0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translateY(100vh) rotate(5deg); opacity: 0; }
+        }
+
+        /* Mejoras en las flores */
+        .flower:hover {
+          transform: scale(1.05) !important;
+          filter: brightness(1.2);
+          transition: all 0.3s ease;
+        }
+
+        .rose:hover {
+          transform: scale(1.1) !important;
+          filter: brightness(1.3);
+          transition: all 0.3s ease;
+        }
+
+        .daisy:hover {
+          transform: scale(1.08) !important;
+          filter: brightness(1.2);
+          transition: all 0.3s ease;
+        }
+
+        /* Efectos de cursor personalizado */
+        body {
+          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="rgba(255,235,59,0.3)" stroke="rgba(255,235,59,0.8)" stroke-width="2"/></svg>'), auto;
+        }
+
+        /* Mejoras en los mensajes */
+        .message {
+          background: linear-gradient(135deg, rgba(252, 231, 0, 0.4), rgba(255, 235, 59, 0.3));
+          backdrop-filter: blur(15px);
+          border: 2px solid rgba(255, 235, 59, 0.4);
+          box-shadow: 
+            0 8px 32px rgba(255, 235, 59, 0.2),
+            0 0 60px rgba(255, 235, 59, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+          text-shadow: 
+            0 0 20px rgba(255, 245, 157, 0.8),
+            0 0 40px rgba(255, 245, 157, 0.4),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive mejorado */
+        @media (max-width: 768px) {
+          .message {
+            font-size: 24px;
+            padding: 15px 20px;
+            margin: 0 20px;
+          }
+          
+          .moon {
+            width: 80px;
+            height: 80px;
+            top: 5%;
+            right: 8%;
+          }
+          
+          .audio-controls {
+            top: 10px;
+            right: 10px;
+          }
+          
+          .audio-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+          }
+          
+          .tulip {
+            bottom: 3vmin;
+          }
+          
+          .tulip--left, .tulip--right {
+            left: -5%;
+            right: -5%;
+          }
+          
+          .tulip--left-2, .tulip--right-2 {
+            left: -8%;
+            right: -8%;
+            bottom: 6vmin;
+          }
+          
+          .tulip__flower {
+            width: 6vmin;
+            height: 9vmin;
+          }
+          
+          .tulip__petal {
+            width: 4.5vmin;
+            height: 7.5vmin;
+          }
+          
+          .tulip__stem {
+            height: 30vmin;
+            width: 1.4vmin;
+          }
+          
+          .small-tulip {
+            bottom: 2vmin;
+          }
+          
+          .small-tulip--1 { left: 6%; bottom: 4vmin; }
+          .small-tulip--2 { left: 18%; bottom: 3vmin; }
+          .small-tulip--3 { right: 6%; bottom: 4vmin; }
+          .small-tulip--4 { right: 18%; bottom: 3vmin; }
+          .small-tulip--5 { left: 10%; bottom: 12vmin; }
+          .small-tulip--6 { right: 10%; bottom: 12vmin; }
+          .small-tulip--7 { left: 24%; bottom: 15vmin; }
+          .small-tulip--8 { right: 24%; bottom: 15vmin; }
+          .small-tulip--9 { left: 40%; bottom: 6vmin; }
+          .small-tulip--10 { right: 40%; bottom: 6vmin; }
+          
+          .small-tulip__flower {
+            width: 4vmin;
+            height: 6vmin;
+          }
+          
+          .small-tulip__petal {
+            width: 3vmin;
+            height: 5vmin;
+          }
+          
+          .small-tulip__stem {
+            height: 18vmin;
+            width: 1vmin;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .message {
+            font-size: 20px;
+            padding: 12px 16px;
+          }
+          
+          .moon {
+            width: 60px;
+            height: 60px;
+          }
+          
+          .tulip__flower {
+            width: 5vmin;
+            height: 7.5vmin;
+          }
+          
+          .tulip__petal {
+            width: 3.5vmin;
+            height: 6vmin;
+          }
+          
+          .tulip__stem {
+            height: 25vmin;
+            width: 1.2vmin;
+          }
+          
+          .tulip--left, .tulip--right {
+            left: -3%;
+            right: -3%;
+          }
+          
+          .tulip--left-2, .tulip--right-2 {
+            left: -6%;
+            right: -6%;
+          }
+          
+          .small-tulip__flower {
+            width: 3.5vmin;
+            height: 5.5vmin;
+          }
+          
+          .small-tulip__petal {
+            width: 2.5vmin;
+            height: 4.5vmin;
+          }
+          
+          .small-tulip__stem {
+            height: 15vmin;
+            width: 0.8vmin;
+          }
+          
+          .small-tulip--1 { left: 5%; bottom: 3vmin; }
+          .small-tulip--2 { left: 15%; bottom: 2vmin; }
+          .small-tulip--3 { right: 5%; bottom: 3vmin; }
+          .small-tulip--4 { right: 15%; bottom: 2vmin; }
+          .small-tulip--5 { left: 8%; bottom: 8vmin; }
+          .small-tulip--6 { right: 8%; bottom: 8vmin; }
+          .small-tulip--7 { left: 20%; bottom: 10vmin; }
+          .small-tulip--8 { right: 20%; bottom: 10vmin; }
+          .small-tulip--9 { left: 35%; bottom: 5vmin; }
+          .small-tulip--10 { right: 35%; bottom: 5vmin; }
+        }
+
+        /* Animación de entrada mejorada */
+        .fade-in {
+          animation: fadeInPage 2s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+          0% {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        /* Efectos de brillo en las flores */
+        .flower__light {
+          animation: light-ans 4s linear infinite backwards, glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+          0% { 
+            box-shadow: 0 0 5px rgba(255, 251, 0, 0.5);
+          }
+          100% { 
+            box-shadow: 0 0 20px rgba(255, 251, 0, 0.8), 0 0 30px rgba(255, 251, 0, 0.4);
+          }
+        }
+
+        /* Tulipanes amarillos */
+        .tulip {
+          position: absolute;
+          bottom: 5vmin;
+          transform-origin: bottom center;
+          z-index: 8;
+        }
+
+        .tulip--left {
+          left: -8%;
+          animation: tulip-sway-left 6s ease-in-out infinite;
+        }
+
+        .tulip--right {
+          right: -8%;
+          animation: tulip-sway-right 5.5s ease-in-out infinite;
+        }
+
+        .tulip--left-2 {
+          left: -12%;
+          bottom: 8vmin;
+          animation: tulip-sway-left-2 7s ease-in-out infinite;
+        }
+
+        .tulip--right-2 {
+          right: -12%;
+          bottom: 8vmin;
+          animation: tulip-sway-right-2 6.5s ease-in-out infinite;
+        }
+
+        .tulip__flower {
+          position: relative;
+          width: 8vmin;
+          height: 12vmin;
+          animation: tulip-bloom 3s 2s backwards;
+        }
+
+        .tulip__petal {
+          position: absolute;
+          width: 6vmin;
+          height: 10vmin;
+          background: linear-gradient(180deg, #ffeb3b 0%, #ffc107 50%, #ff8f00 100%);
+          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+          transform-origin: bottom center;
+        }
+
+        .tulip__petal--1 {
+          transform: rotate(-15deg) translateY(-1vmin);
+          z-index: 1;
+        }
+
+        .tulip__petal--2 {
+          transform: rotate(15deg) translateY(-1vmin);
+          z-index: 2;
+        }
+
+        .tulip__petal--3 {
+          transform: rotate(-45deg) translateY(-0.5vmin);
+          z-index: 3;
+        }
+
+        .tulip__petal--4 {
+          transform: rotate(45deg) translateY(-0.5vmin);
+          z-index: 4;
+        }
+
+        .tulip__petal--5 {
+          transform: rotate(-75deg) translateY(-0.2vmin);
+          z-index: 5;
+        }
+
+        .tulip__petal--6 {
+          transform: rotate(75deg) translateY(-0.2vmin);
+          z-index: 6;
+        }
+
+        .tulip__center {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 2.5vmin;
+          height: 2.5vmin;
+          background: radial-gradient(circle, #ff6f00 0%, #e65100 100%);
+          border-radius: 50%;
+          z-index: 10;
+          animation: tulip-center-glow 2s ease-in-out infinite alternate;
+        }
+
+        .tulip__stem {
+          height: 40vmin;
+          width: 1.8vmin;
+          background: linear-gradient(to top, #2e7d32, #4caf50, #66bb6a);
+          border-radius: 0.9vmin;
+          animation: tulip-stem-grow 2.5s 1s backwards;
+          position: relative;
+        }
+
+        .tulip__stem::before {
+          content: '';
+          position: absolute;
+          top: 60%;
+          left: -1vmin;
+          width: 3vmin;
+          height: 8vmin;
+          background: linear-gradient(135deg, #4caf50, #66bb6a);
+          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+          transform: rotate(-20deg);
+          animation: tulip-leaf-grow 2s 2.5s backwards;
+        }
+
+        .tulip__stem::after {
+          content: '';
+          position: absolute;
+          top: 40%;
+          right: -1vmin;
+          width: 3vmin;
+          height: 6vmin;
+          background: linear-gradient(45deg, #4caf50, #66bb6a);
+          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+          transform: rotate(20deg);
+          animation: tulip-leaf-grow 2s 3s backwards;
+        }
+
+        /* Animaciones de los tulipanes */
+        @keyframes tulip-sway-left {
+          0%, 100% { 
+            transform: rotate(-2deg) translateY(0);
+          }
+          25% { 
+            transform: rotate(-1deg) translateY(-2px);
+          }
+          50% { 
+            transform: rotate(1deg) translateY(-1px);
+          }
+          75% { 
+            transform: rotate(-0.5deg) translateY(-3px);
+          }
+        }
+
+        @keyframes tulip-sway-right {
+          0%, 100% { 
+            transform: rotate(2deg) translateY(0);
+          }
+          25% { 
+            transform: rotate(1deg) translateY(-2px);
+          }
+          50% { 
+            transform: rotate(-1deg) translateY(-1px);
+          }
+          75% { 
+            transform: rotate(0.5deg) translateY(-3px);
+          }
+        }
+
+        @keyframes tulip-sway-left-2 {
+          0%, 100% { 
+            transform: rotate(-1.5deg) translateY(0);
+          }
+          30% { 
+            transform: rotate(-0.5deg) translateY(-1px);
+          }
+          60% { 
+            transform: rotate(1.5deg) translateY(-2px);
+          }
+          90% { 
+            transform: rotate(-1deg) translateY(-1px);
+          }
+        }
+
+        @keyframes tulip-sway-right-2 {
+          0%, 100% { 
+            transform: rotate(1.5deg) translateY(0);
+          }
+          30% { 
+            transform: rotate(0.5deg) translateY(-1px);
+          }
+          60% { 
+            transform: rotate(-1.5deg) translateY(-2px);
+          }
+          90% { 
+            transform: rotate(1deg) translateY(-1px);
+          }
+        }
+
+        @keyframes tulip-bloom {
+          0% { 
+            transform: scale(0) rotate(0deg);
+            opacity: 0;
+          }
+          50% { 
+            transform: scale(0.7) rotate(180deg);
+            opacity: 0.7;
+          }
+          100% { 
+            transform: scale(1) rotate(360deg);
+            opacity: 1;
+          }
+        }
+
+        @keyframes tulip-stem-grow {
+          0% { 
+            height: 0;
+            opacity: 0;
+          }
+          100% { 
+            height: 40vmin;
+            opacity: 1;
+          }
+        }
+
+        @keyframes tulip-leaf-grow {
+          0% { 
+            transform: scale(0);
+            opacity: 0;
+          }
+          100% { 
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        @keyframes tulip-center-glow {
+          0% { 
+            box-shadow: 0 0 5px rgba(255, 111, 0, 0.5);
+          }
+          100% { 
+            box-shadow: 0 0 15px rgba(255, 111, 0, 0.8), 0 0 25px rgba(255, 111, 0, 0.4);
+          }
+        }
+
+        /* Efectos hover para tulipanes */
+        .tulip:hover {
+          transform: scale(1.1) !important;
+          filter: brightness(1.3);
+          transition: all 0.3s ease;
+        }
+
+        .tulip:hover .tulip__petal {
+          animation: tulip-petal-shimmer 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes tulip-petal-shimmer {
+          0% { 
+            background: linear-gradient(180deg, #ffeb3b 0%, #ffc107 50%, #ff8f00 100%);
+          }
+          100% { 
+            background: linear-gradient(180deg, #fff176 0%, #ffd54f 50%, #ffb300 100%);
+          }
+        }
+
+        /* Tulipanes pequeños de diferentes colores */
+        .small-tulip {
+          position: absolute;
+          bottom: 4vmin;
+          transform-origin: bottom center;
+          z-index: 7;
+        }
+
+        /* Posiciones para tulipanes pequeños - Distribución mejorada */
+        .small-tulip--1 { left: 8%; bottom: 6vmin; animation: small-tulip-sway-1 4s ease-in-out infinite; }
+        .small-tulip--2 { left: 22%; bottom: 4vmin; animation: small-tulip-sway-2 4.5s ease-in-out infinite; }
+        .small-tulip--3 { right: 8%; bottom: 6vmin; animation: small-tulip-sway-3 5s ease-in-out infinite; }
+        .small-tulip--4 { right: 22%; bottom: 4vmin; animation: small-tulip-sway-4 4.2s ease-in-out infinite; }
+        .small-tulip--5 { left: 12%; bottom: 18vmin; animation: small-tulip-sway-5 5.5s ease-in-out infinite; }
+        .small-tulip--6 { right: 12%; bottom: 18vmin; animation: small-tulip-sway-6 4.8s ease-in-out infinite; }
+        .small-tulip--7 { left: 28%; bottom: 22vmin; animation: small-tulip-sway-7 5.2s ease-in-out infinite; }
+        .small-tulip--8 { right: 28%; bottom: 22vmin; animation: small-tulip-sway-8 4.7s ease-in-out infinite; }
+        .small-tulip--9 { left: 45%; bottom: 8vmin; animation: small-tulip-sway-9 4.3s ease-in-out infinite; }
+        .small-tulip--10 { right: 45%; bottom: 8vmin; animation: small-tulip-sway-10 4.9s ease-in-out infinite; }
+
+        .small-tulip__flower {
+          position: relative;
+          width: 5vmin;
+          height: 8vmin;
+          animation: small-tulip-bloom 2.5s 1.5s backwards;
+        }
+
+        .small-tulip__petal {
+          position: absolute;
+          width: 4vmin;
+          height: 6.5vmin;
+          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+          transform-origin: bottom center;
+        }
+
+        /* Colores de tulipanes pequeños */
+        .small-tulip--yellow .small-tulip__petal {
+          background: linear-gradient(180deg, #ffeb3b 0%, #ffc107 50%, #ff8f00 100%);
+        }
+
+        .small-tulip--pink .small-tulip__petal {
+          background: linear-gradient(180deg, #f8bbd9 0%, #f48fb1 50%, #e91e63 100%);
+        }
+
+        .small-tulip--white .small-tulip__petal {
+          background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 50%, #e0e0e0 100%);
+        }
+
+        .small-tulip--purple .small-tulip__petal {
+          background: linear-gradient(180deg, #ce93d8 0%, #ba68c8 50%, #9c27b0 100%);
+        }
+
+        .small-tulip__petal--1 {
+          transform: rotate(-15deg) translateY(-0.8vmin);
+          z-index: 1;
+        }
+
+        .small-tulip__petal--2 {
+          transform: rotate(15deg) translateY(-0.8vmin);
+          z-index: 2;
+        }
+
+        .small-tulip__petal--3 {
+          transform: rotate(-45deg) translateY(-0.4vmin);
+          z-index: 3;
+        }
+
+        .small-tulip__petal--4 {
+          transform: rotate(45deg) translateY(-0.4vmin);
+          z-index: 4;
+        }
+
+        .small-tulip__petal--5 {
+          transform: rotate(-75deg) translateY(-0.2vmin);
+          z-index: 5;
+        }
+
+        .small-tulip__petal--6 {
+          transform: rotate(75deg) translateY(-0.2vmin);
+          z-index: 6;
+        }
+
+        .small-tulip__center {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 1.8vmin;
+          height: 1.8vmin;
+          border-radius: 50%;
+          z-index: 10;
+          animation: small-tulip-center-glow 2s ease-in-out infinite alternate;
+        }
+
+        /* Centros de diferentes colores */
+        .small-tulip--yellow .small-tulip__center {
+          background: radial-gradient(circle, #ff6f00 0%, #e65100 100%);
+        }
+
+        .small-tulip--pink .small-tulip__center {
+          background: radial-gradient(circle, #ad1457 0%, #880e4f 100%);
+        }
+
+        .small-tulip--white .small-tulip__center {
+          background: radial-gradient(circle, #ffeb3b 0%, #ffc107 100%);
+        }
+
+        .small-tulip--purple .small-tulip__center {
+          background: radial-gradient(circle, #6a1b9a 0%, #4a148c 100%);
+        }
+
+        .small-tulip__stem {
+          height: 25vmin;
+          width: 1.2vmin;
+          background: linear-gradient(to top, #2e7d32, #4caf50, #66bb6a);
+          border-radius: 0.6vmin;
+          animation: small-tulip-stem-grow 2s 1s backwards;
+          position: relative;
+        }
+
+        .small-tulip__stem::before {
+          content: '';
+          position: absolute;
+          top: 60%;
+          left: -0.8vmin;
+          width: 2.2vmin;
+          height: 5vmin;
+          background: linear-gradient(135deg, #4caf50, #66bb6a);
+          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+          transform: rotate(-20deg);
+          animation: small-tulip-leaf-grow 1.5s 2s backwards;
+        }
+
+        .small-tulip__stem::after {
+          content: '';
+          position: absolute;
+          top: 40%;
+          right: -0.8vmin;
+          width: 2.2vmin;
+          height: 4vmin;
+          background: linear-gradient(45deg, #4caf50, #66bb6a);
+          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+          transform: rotate(20deg);
+          animation: small-tulip-leaf-grow 1.5s 2.2s backwards;
+        }
+
+        /* Animaciones para tulipanes pequeños */
+        @keyframes small-tulip-sway-1 {
+          0%, 100% { transform: rotate(-1deg) translateY(0); }
+          50% { transform: rotate(1deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-2 {
+          0%, 100% { transform: rotate(1deg) translateY(0); }
+          50% { transform: rotate(-1deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-3 {
+          0%, 100% { transform: rotate(-1.5deg) translateY(0); }
+          50% { transform: rotate(1.5deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-4 {
+          0%, 100% { transform: rotate(1.5deg) translateY(0); }
+          50% { transform: rotate(-1.5deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-5 {
+          0%, 100% { transform: rotate(-0.8deg) translateY(0); }
+          50% { transform: rotate(0.8deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-6 {
+          0%, 100% { transform: rotate(0.8deg) translateY(0); }
+          50% { transform: rotate(-0.8deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-7 {
+          0%, 100% { transform: rotate(-1.2deg) translateY(0); }
+          50% { transform: rotate(1.2deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-8 {
+          0%, 100% { transform: rotate(1.2deg) translateY(0); }
+          50% { transform: rotate(-1.2deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-9 {
+          0%, 100% { transform: rotate(-0.9deg) translateY(0); }
+          50% { transform: rotate(0.9deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-sway-10 {
+          0%, 100% { transform: rotate(0.9deg) translateY(0); }
+          50% { transform: rotate(-0.9deg) translateY(-1px); }
+        }
+
+        @keyframes small-tulip-bloom {
+          0% { 
+            transform: scale(0) rotate(0deg);
+            opacity: 0;
+          }
+          50% { 
+            transform: scale(0.6) rotate(180deg);
+            opacity: 0.6;
+          }
+          100% { 
+            transform: scale(1) rotate(360deg);
+            opacity: 1;
+          }
+        }
+
+        @keyframes small-tulip-stem-grow {
+          0% { 
+            height: 0;
+            opacity: 0;
+          }
+          100% { 
+            height: 25vmin;
+            opacity: 1;
+          }
+        }
+
+        @keyframes small-tulip-leaf-grow {
+          0% { 
+            transform: scale(0);
+            opacity: 0;
+          }
+          100% { 
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        @keyframes small-tulip-center-glow {
+          0% { 
+            box-shadow: 0 0 3px rgba(255, 111, 0, 0.4);
+          }
+          100% { 
+            box-shadow: 0 0 8px rgba(255, 111, 0, 0.7), 0 0 15px rgba(255, 111, 0, 0.3);
+          }
+        }
+
+        /* Efectos hover para tulipanes pequeños */
+        .small-tulip:hover {
+          transform: scale(1.15) !important;
+          filter: brightness(1.4);
+          transition: all 0.3s ease;
+        }
+
+        .small-tulip:hover .small-tulip__petal {
+          animation: small-tulip-petal-shimmer 0.4s ease-in-out infinite alternate;
+        }
+
+        @keyframes small-tulip-petal-shimmer {
+          0% { 
+            filter: brightness(1);
+          }
+          100% { 
+            filter: brightness(1.3);
+          }
+        }
+    </style>
+</head>
+<body class="container">
+    <!-- Controles de audio -->
+    <div class="audio-controls">
+        <button class="audio-btn" id="playBtn" title="Reproducir/Pausar música">🎵</button>
+        <button class="audio-btn" id="muteBtn" title="Silenciar/Activar sonido">🔊</button>
+    </div>
+
+    <!-- Audio de fondo -->
+    <audio id="backgroundMusic" loop preload="auto" volume="0.4">
+        <!-- Música personalizada desde YouTube -->
+        <source src="tu-musica.mp3" type="audio/mpeg">
+        <source src="tu-musica.wav" type="audio/wav">
+        <source src="tu-musica.ogg" type="audio/ogg">
+        
+        <!-- Música de respaldo si no hay archivo personalizado -->
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+    </audio>
+
+    <!-- Partículas flotantes -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Rayos de luz -->
+    <div class="light-rays">
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+        <div class="light-ray"></div>
+    </div>
+
+    <!-- Cielo nocturno con luna y estrellas -->
+    <div class="night">
+        <div class="moon"></div>
+        <div class="stars">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+    </div>
+
+    <div class="flowers">
+        <!-- Flores amarillas originales -->
+        <div class="flower flower--1">
+            <div class="flower__leafs flower__leafs--1">
+                <div class="flower__leaf flower__leaf--1"></div>
+                <div class="flower__leaf flower__leaf--2"></div>
+                <div class="flower__leaf flower__leaf--3"></div>
+                <div class="flower__leaf flower__leaf--4"></div>
+                <div class="flower__white-circle"></div>
+
+                <div class="flower__light flower__light--1"></div>
+                <div class="flower__light flower__light--2"></div>
+                <div class="flower__light flower__light--3"></div>
+                <div class="flower__light flower__light--4"></div>
+                <div class="flower__light flower__light--5"></div>
+                <div class="flower__light flower__light--6"></div>
+                <div class="flower__light flower__light--7"></div>
+                <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line">
+                <div class="flower__line__leaf flower__line__leaf--1"></div>
+                <div class="flower__line__leaf flower__line__leaf--2"></div>
+                <div class="flower__line__leaf flower__line__leaf--3"></div>
+                <div class="flower__line__leaf flower__line__leaf--4"></div>
+                <div class="flower__line__leaf flower__line__leaf--5"></div>
+                <div class="flower__line__leaf flower__line__leaf--6"></div>
+            </div>
+        </div>
+
+        <div class="flower flower--2">
+            <div class="flower__leafs flower__leafs--2">
+                <div class="flower__leaf flower__leaf--1"></div>
+                <div class="flower__leaf flower__leaf--2"></div>
+                <div class="flower__leaf flower__leaf--3"></div>
+                <div class="flower__leaf flower__leaf--4"></div>
+                <div class="flower__white-circle"></div>
+
+                <div class="flower__light flower__light--1"></div>
+                <div class="flower__light flower__light--2"></div>
+                <div class="flower__light flower__light--3"></div>
+                <div class="flower__light flower__light--4"></div>
+                <div class="flower__light flower__light--5"></div>
+                <div class="flower__light flower__light--6"></div>
+                <div class="flower__light flower__light--7"></div>
+                <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line">
+                <div class="flower__line__leaf flower__line__leaf--1"></div>
+                <div class="flower__line__leaf flower__line__leaf--2"></div>
+                <div class="flower__line__leaf flower__line__leaf--3"></div>
+                <div class="flower__line__leaf flower__line__leaf--4"></div>
+            </div>
+        </div>
+
+        <div class="flower flower--3">
+            <div class="flower__leafs flower__leafs--3">
+                <div class="flower__leaf flower__leaf--1"></div>
+                <div class="flower__leaf flower__leaf--2"></div>
+                <div class="flower__leaf flower__leaf--3"></div>
+                <div class="flower__leaf flower__leaf--4"></div>
+                <div class="flower__white-circle"></div>
+
+                <div class="flower__light flower__light--1"></div>
+                <div class="flower__light flower__light--2"></div>
+                <div class="flower__light flower__light--3"></div>
+                <div class="flower__light flower__light--4"></div>
+                <div class="flower__light flower__light--5"></div>
+                <div class="flower__light flower__light--6"></div>
+                <div class="flower__light flower__light--7"></div>
+                <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line">
+                <div class="flower__line__leaf flower__line__leaf--1"></div>
+                <div class="flower__line__leaf flower__line__leaf--2"></div>
+                <div class="flower__line__leaf flower__line__leaf--3"></div>
+                <div class="flower__line__leaf flower__line__leaf--4"></div>
+            </div>
+        </div>
+
+        <!-- Rosas rojas -->
+        <div class="rose rose--1">
+            <div class="rose__petals">
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+            </div>
+            <div class="rose__stem"></div>
+        </div>
+
+        <div class="rose rose--2">
+            <div class="rose__petals">
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+                <div class="rose__petal"></div>
+            </div>
+            <div class="rose__stem"></div>
+        </div>
+
+        <!-- Margaritas blancas -->
+        <div class="daisy daisy--1">
+            <div class="daisy__petals">
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__center"></div>
+            </div>
+            <div class="daisy__stem"></div>
+        </div>
+
+        <div class="daisy daisy--2">
+            <div class="daisy__petals">
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__petal"></div>
+                <div class="daisy__center"></div>
+            </div>
+            <div class="daisy__stem"></div>
+        </div>
+
+        <!-- Tulipanes amarillos -->
+        <div class="tulip tulip--left">
+            <div class="tulip__flower">
+                <div class="tulip__petal tulip__petal--1"></div>
+                <div class="tulip__petal tulip__petal--2"></div>
+                <div class="tulip__petal tulip__petal--3"></div>
+                <div class="tulip__petal tulip__petal--4"></div>
+                <div class="tulip__petal tulip__petal--5"></div>
+                <div class="tulip__petal tulip__petal--6"></div>
+                <div class="tulip__center"></div>
+            </div>
+            <div class="tulip__stem"></div>
+        </div>
+
+        <div class="tulip tulip--right">
+            <div class="tulip__flower">
+                <div class="tulip__petal tulip__petal--1"></div>
+                <div class="tulip__petal tulip__petal--2"></div>
+                <div class="tulip__petal tulip__petal--3"></div>
+                <div class="tulip__petal tulip__petal--4"></div>
+                <div class="tulip__petal tulip__petal--5"></div>
+                <div class="tulip__petal tulip__petal--6"></div>
+                <div class="tulip__center"></div>
+            </div>
+            <div class="tulip__stem"></div>
+        </div>
+
+        <div class="tulip tulip--left-2">
+            <div class="tulip__flower">
+                <div class="tulip__petal tulip__petal--1"></div>
+                <div class="tulip__petal tulip__petal--2"></div>
+                <div class="tulip__petal tulip__petal--3"></div>
+                <div class="tulip__petal tulip__petal--4"></div>
+                <div class="tulip__petal tulip__petal--5"></div>
+                <div class="tulip__petal tulip__petal--6"></div>
+                <div class="tulip__center"></div>
+            </div>
+            <div class="tulip__stem"></div>
+        </div>
+
+        <div class="tulip tulip--right-2">
+            <div class="tulip__flower">
+                <div class="tulip__petal tulip__petal--1"></div>
+                <div class="tulip__petal tulip__petal--2"></div>
+                <div class="tulip__petal tulip__petal--3"></div>
+                <div class="tulip__petal tulip__petal--4"></div>
+                <div class="tulip__petal tulip__petal--5"></div>
+                <div class="tulip__petal tulip__petal--6"></div>
+                <div class="tulip__center"></div>
+            </div>
+            <div class="tulip__stem"></div>
+        </div>
+
+        <!-- Tulipanes pequeños de diferentes colores -->
+        <div class="small-tulip small-tulip--1 small-tulip--yellow">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--2 small-tulip--pink">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--3 small-tulip--white">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--4 small-tulip--purple">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--5 small-tulip--yellow">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--6 small-tulip--pink">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--7 small-tulip--white">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--8 small-tulip--purple">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <!-- Tulipanes centrales adicionales -->
+        <div class="small-tulip small-tulip--9 small-tulip--yellow">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <div class="small-tulip small-tulip--10 small-tulip--pink">
+            <div class="small-tulip__flower">
+                <div class="small-tulip__petal small-tulip__petal--1"></div>
+                <div class="small-tulip__petal small-tulip__petal--2"></div>
+                <div class="small-tulip__petal small-tulip__petal--3"></div>
+                <div class="small-tulip__petal small-tulip__petal--4"></div>
+                <div class="small-tulip__petal small-tulip__petal--5"></div>
+                <div class="small-tulip__petal small-tulip__petal--6"></div>
+                <div class="small-tulip__center"></div>
+            </div>
+            <div class="small-tulip__stem"></div>
+        </div>
+
+        <!-- Hierba decorativa completa -->
+        <div class="growing-grass">
+            <div class="flower__grass flower__grass--1">
+                <div class="flower__grass--top"></div>
+                <div class="flower__grass--bottom"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--1"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--2"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--3"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--4"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--5"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--6"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--7"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--8"></div>
+                <div class="flower__grass__overlay"></div>
+            </div>
+        </div>
+
+        <div class="growing-grass">
+            <div class="flower__grass flower__grass--2">
+                <div class="flower__grass--top"></div>
+                <div class="flower__grass--bottom"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--1"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--2"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--3"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--4"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--5"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--6"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--7"></div>
+                <div class="flower__grass__leaf flower__grass__leaf--8"></div>
+                <div class="flower__grass__overlay"></div>
+            </div>
+        </div>
+
+        <div class="grow-ans" style="--d:1.2s">
+            <div class="flower__g-long">
+                <div class="flower__g-long__top"></div>
+                <div class="flower__g-long__bottom"></div>
+            </div>
+        </div>
+
+        <!-- Hierba larga a los lados -->
+        <div class="long-g long-g--0">
+            <div class="grow-ans" style="--d:3s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:2.2s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.4s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.6s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+
+        <div class="long-g long-g--1">
+            <div class="grow-ans" style="--d:3.6s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.8s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:4s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.2s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+
+        <div class="long-g long-g--2">
+            <div class="grow-ans" style="--d:4s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.2s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.4s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.6s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+
+        <div class="long-g long-g--3">
+            <div class="grow-ans" style="--d:4s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.2s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:3s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.6s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+
+        <div class="long-g long-g--4">
+            <div class="grow-ans" style="--d:4s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.2s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:3s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.6s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+
+        <div class="long-g long-g--5">
+            <div class="grow-ans" style="--d:4s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.2s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:3s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.6s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+
+        <div class="long-g long-g--6">
+            <div class="grow-ans" style="--d:4.2s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.4s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.6s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:4.8s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+
+        <div class="long-g long-g--7">
+            <div class="grow-ans" style="--d:3s">
+                <div class="leaf leaf--0"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.2s">
+                <div class="leaf leaf--1"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.5s">
+                <div class="leaf leaf--2"></div>
+            </div>
+            <div class="grow-ans" style="--d:3.6s">
+                <div class="leaf leaf--3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensajes secuenciales -->
+    <div class="message message-1">Estas flores son para ti</div>
+    <div class="message message-2">Eres una niña preciosa ❤️</div>
+
+    <script>
+        // Variables globales
+        let audioContext;
+        let backgroundMusic;
+        let isPlaying = false;
+        let isMuted = false;
+        let particles = [];
+
+        // Inicialización cuando la página carga
+        onload = () => {
+            document.body.classList.remove("container");
+            document.body.classList.add("fade-in");
+            
+            // Inicializar audio
+            initAudio();
+            
+            // Crear partículas
+            createParticles();
+            
+            // Iniciar música automáticamente (con interacción del usuario)
+            setTimeout(() => {
+                showAudioPrompt();
+            }, 2000);
+        };
+
+        // Función para mostrar prompt de audio
+        function showAudioPrompt() {
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn && !isPlaying) {
+                playBtn.style.animation = 'pulse 1s infinite';
+                playBtn.title = '¡Haz clic para activar la música!';
+            }
+        }
+
+        // Inicializar sistema de audio
+        function initAudio() {
+            backgroundMusic = document.getElementById('backgroundMusic');
+            const playBtn = document.getElementById('playBtn');
+            const muteBtn = document.getElementById('muteBtn');
+
+            // Crear audio sintético si no hay archivo
+            if (!backgroundMusic.src) {
+                createSyntheticAudio();
+            }
+
+            // Event listeners para controles
+            playBtn.addEventListener('click', togglePlay);
+            muteBtn.addEventListener('click', toggleMute);
+
+            // Detectar cuando el usuario interactúa para activar audio
+            document.addEventListener('click', enableAudio, { once: true });
+            document.addEventListener('touchstart', enableAudio, { once: true });
+        }
+
+        // Crear audio sintético relajante
+        function createSyntheticAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Crear oscilador para tono base
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // Nota A3
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 1);
+                
+                oscillator.start();
+                
+                // Crear patrón melódico
+                createMelodicPattern();
+                
+            } catch (error) {
+                console.log('Audio no disponible:', error);
+            }
+        }
+
+        // Crear patrón melódico
+        function createMelodicPattern() {
+            if (!audioContext) return;
+            
+            const notes = [220, 246.94, 277.18, 329.63, 369.99]; // A, B, C#, E, F#
+            let noteIndex = 0;
+            
+            function playNextNote() {
+                if (!isPlaying || isMuted) return;
+                
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(notes[noteIndex], audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.1);
+                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 1);
+                
+                noteIndex = (noteIndex + 1) % notes.length;
+                
+                setTimeout(playNextNote, 1500);
+            }
+            
+            if (isPlaying) {
+                playNextNote();
+            }
+        }
+
+        // Habilitar audio después de interacción del usuario
+        function enableAudio() {
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
+
+        // Toggle play/pause
+        function togglePlay() {
+            const playBtn = document.getElementById('playBtn');
+            
+            if (!isPlaying) {
+                isPlaying = true;
+                playBtn.textContent = '⏸️';
+                playBtn.classList.add('playing');
+                playBtn.style.animation = 'none';
+                
+                if (backgroundMusic.src) {
+                    backgroundMusic.play().catch(e => console.log('Error reproduciendo audio:', e));
+                } else {
+                    createMelodicPattern();
+                }
+            } else {
+                isPlaying = false;
+                playBtn.textContent = '🎵';
+                playBtn.classList.remove('playing');
+                
+                if (backgroundMusic.src) {
+                    backgroundMusic.pause();
+                }
+            }
+        }
+
+        // Toggle mute
+        function toggleMute() {
+            const muteBtn = document.getElementById('muteBtn');
+            
+            isMuted = !isMuted;
+            muteBtn.textContent = isMuted ? '🔇' : '🔊';
+            
+            if (backgroundMusic.src) {
+                backgroundMusic.muted = isMuted;
+            }
+        }
+
+        // Crear partículas flotantes
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Posición y tamaño aleatorios
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 4 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Efectos de mouse mejorados
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            
+            const moon = document.querySelector('.moon');
+            const flowers = document.querySelectorAll('.flower, .rose, .daisy, .tulip, .small-tulip');
+            const stars = document.querySelectorAll('.star');
+            
+            // Efecto parallax en la luna
+            if (moon) {
+                moon.style.transform = `translate(${mouseX * 5}px, ${mouseY * 3}px)`;
+            }
+            
+            // Efecto en las flores
+            flowers.forEach((flower, i) => {
+                const intensity = 0.2 + (i * 0.03);
+                const currentTransform = flower.style.transform || '';
+                const baseTransform = currentTransform.replace(/rotate\([^)]*\)/g, '');
+                flower.style.transform = baseTransform + ` rotate(${mouseX * intensity}deg)`;
+            });
+            
+            // Efecto en las estrellas
+            stars.forEach((star, i) => {
+                const intensity = 0.1 + (i * 0.02);
+                star.style.transform = `translate(${mouseX * intensity * 10}px, ${mouseY * intensity * 10}px)`;
+            });
+        });
+
+        // Efectos de click en las flores
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.flower, .rose, .daisy, .tulip, .small-tulip')) {
+                createClickEffect(e.clientX, e.clientY);
+            }
+        });
+
+        // Crear efecto de click
+        function createClickEffect(x, y) {
+            const effect = document.createElement('div');
+            effect.style.position = 'fixed';
+            effect.style.left = x + 'px';
+            effect.style.top = y + 'px';
+            effect.style.width = '20px';
+            effect.style.height = '20px';
+            effect.style.borderRadius = '50%';
+            effect.style.background = 'radial-gradient(circle, rgba(255,235,59,0.8) 0%, transparent 70%)';
+            effect.style.pointerEvents = 'none';
+            effect.style.zIndex = '1000';
+            effect.style.animation = 'clickEffect 1s ease-out forwards';
+            
+            document.body.appendChild(effect);
+            
+            setTimeout(() => {
+                document.body.removeChild(effect);
+            }, 1000);
+        }
+
+        // Pausar música cuando se sale de la página
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && isPlaying) {
+                if (backgroundMusic.src) {
+                    backgroundMusic.pause();
+                }
+            } else if (!document.hidden && isPlaying) {
+                if (backgroundMusic.src) {
+                    backgroundMusic.play().catch(e => console.log('Error resuming audio:', e));
+                }
+            }
+        });
+
+        // Añadir estilos para efecto de click
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes clickEffect {
+                0% {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(3);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
