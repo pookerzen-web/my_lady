@@ -1935,15 +1935,14 @@
     </div>
 
     <!-- Audio de fondo -->
-    <audio id="backgroundMusic" loop preload="auto" volume="0.4">
-        <!-- Música personalizada desde YouTube -->
+    <audio id="backgroundMusic" loop preload="auto" controls style="display: none;">
+        <!-- Música personalizada "Pasilyo" -->
         <source src="tu-musica.mp3" type="audio/mpeg">
         <source src="tu-musica.wav" type="audio/wav">
         <source src="tu-musica.ogg" type="audio/ogg">
         
-        <!-- Música de respaldo si no hay archivo personalizado -->
-        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+        <!-- Mensaje si no se puede cargar -->
+        Tu navegador no soporta el elemento de audio.
     </audio>
 
     <!-- Partículas flotantes -->
@@ -2457,7 +2456,6 @@
 
     <script>
         // Variables globales
-        let audioContext;
         let backgroundMusic;
         let isPlaying = false;
         let isMuted = false;
@@ -2495,11 +2493,6 @@
             const playBtn = document.getElementById('playBtn');
             const muteBtn = document.getElementById('muteBtn');
 
-            // Crear audio sintético si no hay archivo
-            if (!backgroundMusic.src) {
-                createSyntheticAudio();
-            }
-
             // Event listeners para controles
             playBtn.addEventListener('click', togglePlay);
             muteBtn.addEventListener('click', toggleMute);
@@ -2509,74 +2502,13 @@
             document.addEventListener('touchstart', enableAudio, { once: true });
         }
 
-        // Crear audio sintético relajante
-        function createSyntheticAudio() {
-            try {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Crear oscilador para tono base
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // Nota A3
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 1);
-                
-                oscillator.start();
-                
-                // Crear patrón melódico
-                createMelodicPattern();
-                
-            } catch (error) {
-                console.log('Audio no disponible:', error);
-            }
-        }
-
-        // Crear patrón melódico
-        function createMelodicPattern() {
-            if (!audioContext) return;
-            
-            const notes = [220, 246.94, 277.18, 329.63, 369.99]; // A, B, C#, E, F#
-            let noteIndex = 0;
-            
-            function playNextNote() {
-                if (!isPlaying || isMuted) return;
-                
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(notes[noteIndex], audioContext.currentTime);
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.1);
-                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 1);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 1);
-                
-                noteIndex = (noteIndex + 1) % notes.length;
-                
-                setTimeout(playNextNote, 1500);
-            }
-            
-            if (isPlaying) {
-                playNextNote();
-            }
-        }
+        // Función eliminada - solo usamos música personalizada
 
         // Habilitar audio después de interacción del usuario
         function enableAudio() {
-            if (audioContext && audioContext.state === 'suspended') {
-                audioContext.resume();
+            // Solo habilitamos el audio del elemento HTML
+            if (backgroundMusic) {
+                backgroundMusic.load();
             }
         }
 
@@ -2590,17 +2522,18 @@
                 playBtn.classList.add('playing');
                 playBtn.style.animation = 'none';
                 
-                if (backgroundMusic.src) {
+                // Solo reproducir la música personalizada
+                if (backgroundMusic) {
+                    backgroundMusic.volume = 0.4; // Volumen moderado
                     backgroundMusic.play().catch(e => console.log('Error reproduciendo audio:', e));
-                } else {
-                    createMelodicPattern();
                 }
             } else {
                 isPlaying = false;
                 playBtn.textContent = '🎵';
                 playBtn.classList.remove('playing');
                 
-                if (backgroundMusic.src) {
+                // Pausar la música
+                if (backgroundMusic) {
                     backgroundMusic.pause();
                 }
             }
@@ -2613,7 +2546,8 @@
             isMuted = !isMuted;
             muteBtn.textContent = isMuted ? '🔇' : '🔊';
             
-            if (backgroundMusic.src) {
+            // Silenciar/activar la música
+            if (backgroundMusic) {
                 backgroundMusic.muted = isMuted;
             }
         }
@@ -2697,11 +2631,11 @@
         // Pausar música cuando se sale de la página
         document.addEventListener('visibilitychange', () => {
             if (document.hidden && isPlaying) {
-                if (backgroundMusic.src) {
+                if (backgroundMusic) {
                     backgroundMusic.pause();
                 }
             } else if (!document.hidden && isPlaying) {
-                if (backgroundMusic.src) {
+                if (backgroundMusic) {
                     backgroundMusic.play().catch(e => console.log('Error resuming audio:', e));
                 }
             }
